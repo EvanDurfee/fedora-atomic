@@ -2,6 +2,8 @@
 
 set -ouex pipefail
 
+CTX_DIR="$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
+
 ### Install packages
 
 # Packages can be installed from any enabled yum repo on the image.
@@ -69,7 +71,7 @@ removed_packages=(
 dnf5 install -y "${added_packages[@]}"
 dnf5 rm -y "${removed_packages[@]}"
 
-just --justfile=./distrobox-auto/justfile install
+just --justfile="$CTX_DIR"/distrobox-auto/justfile install
 
 # Use a COPR Example:
 #
