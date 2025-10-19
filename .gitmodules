@@ -1,0 +1,3 @@
+[submodule "build_files/distrobox-auto"]
+	path = build_files/distrobox-auto
+	url = ../distrobox-auto.git
