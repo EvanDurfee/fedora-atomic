@@ -69,7 +69,7 @@ removed_packages=(
 dnf5 install -y "${added_packages[@]}"
 dnf5 rm -y "${removed_packages[@]}"
 
-just --justfile=./distrobox-auto install
+just --justfile=./distrobox-auto/justfile install
 
 # Use a COPR Example:
 #
