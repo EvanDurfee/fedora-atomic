@@ -1,3 +1,6 @@
 [submodule "build_files/distrobox-auto"]
 	path = build_files/distrobox-auto
 	url = ../distrobox-auto.git
+[submodule "build_files/flatpak-sync"]
+	path = build_files/flatpak-sync
+	url = ../flatpak-sync.git
