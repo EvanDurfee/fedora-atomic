@@ -2,7 +2,8 @@
 
 set -ouex pipefail
 
-CTX_DIR="$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
+# Copy System Files onto root
+rsync -rvK /ctx/sys_files/ /
 
 ### Install packages
 
@@ -57,9 +58,9 @@ removed_packages=(
 	fedora-flathub-remote  # Fedora filtered flathub (we'll use normal flathub)
 	fedora-workstation-repositories  # Fedora select 3rd party repos (we'll use rpmfusion instead)
 	# Extensions
-	gnome-shell-extension-apps-menu
-	gnome-shell-extension-places-menu
-	gnome-shell-extension-window-list
+#	gnome-shell-extension-apps-menu
+#	gnome-shell-extension-places-menu
+#	gnome-shell-extension-window-list
 	# Replace system monitor with MissionCenter
 	gnome-system-monitor
 	gnome-tour
@@ -71,7 +72,8 @@ removed_packages=(
 dnf5 install -y "${added_packages[@]}"
 dnf5 rm -y "${removed_packages[@]}"
 
-just --justfile="$CTX_DIR"/distrobox-auto/justfile install
+just --justfile=/ctx/distrobox-auto/justfile install
+just --justfile=/ctx/flatpak-sync/justfile install
 
 # Use a COPR Example:
 #
