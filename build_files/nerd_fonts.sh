@@ -32,3 +32,5 @@ download_font() {
 download_font FiraCode FiraCodeNerdFont FiraCodeNerdFontMono
 # Meslo LGM = medium line spacing, LGMDZ = dotted zero
 download_font Meslo MesloLGMNerdFont MesloLGMNerdFontMono
+
+fc-cache --force --verbose
