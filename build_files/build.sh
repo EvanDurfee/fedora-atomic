@@ -81,13 +81,10 @@ dnf5 rm -y "${removed_packages[@]}"
 just --justfile=/ctx/distrobox-auto/justfile install
 just --justfile=/ctx/flatpak-sync/justfile install
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
-
+# Install brew via the ublue copr
+dnf5 -y copr enable ublue-os/packages
+dnf5 install ublue-brew
+dnf5 -y copr disable ublue-os/staging
 
 
 #### Example for enabling a System Unit File
