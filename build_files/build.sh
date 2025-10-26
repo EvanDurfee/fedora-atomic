@@ -56,14 +56,20 @@ removed_packages=(
 	fedora-chromium-config
 	fedora-chromium-config-gnome
 	fedora-flathub-remote  # Fedora filtered flathub (we'll use normal flathub)
-	fedora-workstation-repositories  # Fedora select 3rd party repos (we'll use rpmfusion instead)
+	fedora-workstation-repositories  # Fedora selected 3rd party repos (we'll use rpmfusion instead)
 	# Extensions
 #	gnome-shell-extension-apps-menu
 #	gnome-shell-extension-places-menu
 #	gnome-shell-extension-window-list
+#	gnome-shell-extension-background-logo
 	# Replace system monitor with MissionCenter
 	gnome-system-monitor
+	# Replace gnome extensions with extension manager flatpak
+	gnome-extensions-app
+	# Remove intro tour
 	gnome-tour
+	# Remove basic help app
+	yelp
 	# Remove htop (added by ublue) in favor of btop
 	htop
 )
