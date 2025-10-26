@@ -83,7 +83,7 @@ just --justfile=/ctx/flatpak-sync/justfile install
 
 # Install brew via the ublue copr
 dnf5 -y copr enable ublue-os/packages
-dnf5 install ublue-brew
+dnf5 install -y ublue-brew
 dnf5 -y copr disable ublue-os/staging
 
 
