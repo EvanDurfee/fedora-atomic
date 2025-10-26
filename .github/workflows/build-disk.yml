@@ -26,7 +26,7 @@ on:
 env:
   IMAGE_NAME: ${{ github.event.repository.name }} # output of build.yml, keep in sync
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
-  DEFAULT_TAG: "latest"
+  DEFAULT_TAG: "latest" # replaced with "testing" for PRs
   BIB_IMAGE: "ghcr.io/lorbuschris/bootc-image-builder:20250608" # "quay.io/centos-bootc/bootc-image-builder:latest" - see https://github.com/osbuild/bootc-image-builder/pull/954
 
 concurrency:
@@ -83,13 +83,14 @@ jobs:
         with:
           builder-image: ${{ env.BIB_IMAGE }}
           config-file: ${{ matrix.disk-type == 'anaconda-iso' && './disk_config/iso.toml' || './disk_config/disk.toml' }}
-          image: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}
+          image: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event_name != 'pull_request' && env.DEFAULT_TAG || 'testing' }}
           chown: ${{ env.USER_UID }}:${{ env.USER_GID }}
           types: ${{ matrix.disk-type }}
           additional-args: --use-librepo=True
 
       - name: Upload disk images and Checksum to Job Artifacts
-        if: inputs.upload-to-s3 != true && github.event_name != 'pull_request'
+#        if: inputs.upload-to-s3 != true && github.event_name != 'pull_request'
+        if: inputs.upload-to-s3 != true
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           path: ${{ steps.build.outputs.output-directory }}
@@ -99,7 +100,8 @@ jobs:
           overwrite: true
       
       - name: Upload to S3
-        if: inputs.upload-to-s3 == true && github.event_name != 'pull_request'
+#        if: inputs.upload-to-s3 == true && github.event_name != 'pull_request'
+        if: inputs.upload-to-s3 == true
         shell: bash
         env:
           RCLONE_CONFIG_S3_TYPE: s3
