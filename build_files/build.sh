@@ -22,6 +22,7 @@ added_packages=(
 	qemu  # Virtualization
 	qemu-user-static # Usermode emulation support (also usable for running containers from other architectures)
 	qemu-user-binfmt
+	virt-manager
 	gnome-boxes
 	incus  #LXC successor for VM and container management
 	# docker is handled separately from copr
@@ -33,6 +34,7 @@ added_packages=(
 	git
 	git-subtree
 	git-credential-libsecret
+	git-credential-oauth
 	wl-clipboard
 	just
 	zsh
@@ -117,7 +119,7 @@ dnf5 -y copr disable ublue-os/packages
 just --justfile=/ctx/distro-utils/distrobox-auto/justfile install
 just --justfile=/ctx/distro-utils/flatpak-sync/justfile install
 cp /ctx/distro-utils/jetbrains-installer/jetbrains-ide-setup.sh /usr/bin/jetrbains-ide-setup
-/ctx/distro-utils/nerd-font-install.sh FiraCode Meslo  # TODO: swap to brew fonts?
+/ctx/distro-utils/nerd-fonts-installer/nerd-font-install.sh FiraCode Meslo  # TODO: swap to brew fonts?
 
 #### Example for enabling a System Unit File
 
