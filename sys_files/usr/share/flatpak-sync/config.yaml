@@ -20,7 +20,6 @@
     - org.gnome.Connections
     - org.gnome.Contacts
 #    - org.gnome.Evince  # Replaced by org.gnome.Papers
-#    - org.gnome.Extensions  # Replaced by com.mattjakeman.ExtensionManager
     - org.gnome.Logs
     - org.gnome.Loupe
     - org.gnome.Maps
@@ -36,8 +35,6 @@
     - io.github.flattool.Warehouse
     - io.missioncenter.MissionCenter
     - com.mattjakeman.ExtensionManager
-#     - org.altlinux.Tuner
-    - page.tesk.Refine # Refine is preferred over tuner by ublue, and Tuner is russian
     - com.usebottles.bottles
       # Office stuff
     - org.gnome.Papers
@@ -52,6 +49,4 @@
       # Chat
     - com.discordapp.Discord
   uninstall:
-    - org.altlinux.Tuner # Replaced by page.tesk.Refine
     - org.gnome.Evince  # Replaced by org.gnome.Papers
-    - org.gnome.Extensions  # Replaced by com.mattjakeman.ExtensionManager

@@ -14,32 +14,53 @@ rsync -rvK /ctx/sys_files/ /
 
 # this installs a package from fedora repos
 added_packages=(
+	adw-gtk3-theme  # gtk3 port of the gtk4 libadwaita theme
+	gnome-tweaks
 	# Userspace sensor support
 	lm_sensors
-	# Virtualization and multi-arch distrobox support
-	qemu
-	qemu-user-static
+	# Container and virtualization tools
+	qemu  # Virtualization
+	qemu-user-static # Usermode emulation support (also usable for running containers from other architectures)
+	qemu-user-binfmt
 	gnome-boxes
-	# Shell and system tools
+	incus  #LXC successor for VM and container management
+	# docker is handled separately from copr
+	podman
+	podman-compose
+	podman-machine
+	distrobox
+	# critical system tools
+	git
+	git-subtree
 	git-credential-libsecret
 	wl-clipboard
+	just
 	zsh
-	tmux
-	distrobox
-	ripgrep
-	fd-find
-	bat
-	git-delta
-	fzf
-	btop
+	fish
+
 	fastfetch
 	wireguard-tools
-	micro
+
+#	tmux
+#	ripgrep
+#	fd-find
+#	bat
+#	git-delta
+#	fzf
+#	btop
+#	micro
+#	p7zip
+#	p7zip-plugins
+
 	rclone
 	restic
 	syncthing
-	# Gaming
+
+
+	# Devices
 	steam-devices
+	# Codecs
+	# ublue base handles all the futzing about with rpmfusion for us
 	mozilla-openh264
 	# Shell extension
 	gnome-shell-extension-user-theme
@@ -61,7 +82,7 @@ removed_packages=(
 #	gnome-shell-extension-apps-menu
 #	gnome-shell-extension-places-menu
 #	gnome-shell-extension-window-list
-#	gnome-shell-extension-background-logo
+	gnome-shell-extension-background-logo
 	# Replace system monitor with MissionCenter
 	gnome-system-monitor
 	# Replace gnome extensions with extension manager flatpak
@@ -70,22 +91,31 @@ removed_packages=(
 	gnome-tour
 	# Remove basic help app
 	yelp
-	# Remove htop (added by ublue) in favor of btop
+	# Remove htop (added by ublue)
 	htop
 )
-
 
 dnf5 install -y "${added_packages[@]}"
 dnf5 rm -y "${removed_packages[@]}"
 
-just --justfile=/ctx/distrobox-auto/justfile install
-just --justfile=/ctx/flatpak-sync/justfile install
+# Docker setup take from ublue dx
+dnf5 config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+sed -i "s/enabled=.*/enabled=0/g" /etc/yum.repos.d/docker-ce.repo
+dnf5 -y install --enablerepo=docker-ce-stable \
+	containerd.io \
+	docker-buildx-plugin \
+	docker-ce \
+	docker-ce-cli \
+	docker-compose-plugin \
+	docker-model-plugin
 
 # Install brew via the ublue copr
 dnf5 -y copr enable ublue-os/packages
 dnf5 install -y ublue-brew
 dnf5 -y copr disable ublue-os/packages
 
+just --justfile=/ctx/distrobox-auto/justfile install
+just --justfile=/ctx/flatpak-sync/justfile install
 
 #### Example for enabling a System Unit File
 
