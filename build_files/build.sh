@@ -52,9 +52,9 @@ added_packages=(
 #	p7zip
 #	p7zip-plugins
 
-	rclone
-	restic
-	syncthing
+#	rclone
+#	restic
+#	syncthing
 
 
 	# Devices
