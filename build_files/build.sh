@@ -114,8 +114,10 @@ dnf5 -y copr enable ublue-os/packages
 dnf5 install -y ublue-brew
 dnf5 -y copr disable ublue-os/packages
 
-just --justfile=/ctx/distrobox-auto/justfile install
-just --justfile=/ctx/flatpak-sync/justfile install
+just --justfile=/ctx/distro-utils/distrobox-auto/justfile install
+just --justfile=/ctx/distro-utils/flatpak-sync/justfile install
+cp /ctx/distro-utils/jetbrains-installer/jetbrains-ide-setup.sh /usr/bin/jetrbains-ide-setup
+/ctx/distro-utils/nerd-font-install.sh FiraCode Meslo  # TODO: swap to brew fonts?
 
 #### Example for enabling a System Unit File
 
