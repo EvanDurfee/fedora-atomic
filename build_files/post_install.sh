@@ -3,7 +3,8 @@
 set -ouex pipefail
 
 # Enable system flatpak installs
-systemctl enable flatpak-sync-install.service
+systemctl enable flatpak-installation-sync.service
+systemctl --global enable flatpak-installation-sync.service
 
 # Enable Update Timers
 systemctl --global enable distrobox-auto-pull.timer
