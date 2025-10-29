@@ -63,7 +63,7 @@ added_packages=(
 	steam-devices
 	# Codecs
 	# ublue base handles all the futzing about with rpmfusion for us
-	mozilla-openh264
+#	mozilla-openh264  # Disabled while I try ublue's flatpak approach
 	# Shell extension
 	gnome-shell-extension-user-theme
 	gnome-shell-extension-caffeine
@@ -78,7 +78,8 @@ removed_packages=(
 	fedora-bookmarks
 	fedora-chromium-config
 	fedora-chromium-config-gnome
-	fedora-flathub-remote  # Fedora filtered flathub (we'll use normal flathub)
+# Leave it in, just delete the repos with flatpak-sync if desired
+#	fedora-flathub-remote  # Fedora filtered flathub (we'll use normal flathub)
 	fedora-workstation-repositories  # Fedora selected 3rd party repos (we'll use rpmfusion instead)
 	# Extensions
 #	gnome-shell-extension-apps-menu
@@ -94,14 +95,16 @@ removed_packages=(
 	# Remove basic help app
 	yelp
 	# Remove htop (added by ublue)
-	htop
+#	htop
 )
 
 dnf5 install -y "${added_packages[@]}"
 dnf5 rm -y "${removed_packages[@]}"
 
 # Docker setup take from ublue dx
-dnf5 config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+if ! test -e /etc/yum.repos.d/docker-ce.repo; then
+	dnf5 config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+fi
 sed -i "s/enabled=.*/enabled=0/g" /etc/yum.repos.d/docker-ce.repo
 dnf5 -y install --enablerepo=docker-ce-stable \
 	containerd.io \
@@ -119,7 +122,7 @@ dnf5 -y copr disable ublue-os/packages
 just --justfile=/ctx/distro-utils/distrobox-auto/justfile install
 just --justfile=/ctx/distro-utils/flatpak-sync/justfile install
 cp /ctx/distro-utils/jetbrains-installer/jetbrains-ide-setup.sh /usr/bin/jetrbains-ide-setup
-/ctx/distro-utils/nerd-fonts-installer/nerd-font-install.sh FiraCode Meslo  # TODO: swap to brew fonts?
+# /ctx/distro-utils/nerd-fonts-installer/nerd-font-install.sh FiraCode Meslo  # TODO: swap to brew fonts?
 
 #### Example for enabling a System Unit File
 
