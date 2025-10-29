@@ -102,7 +102,9 @@ dnf5 install -y "${added_packages[@]}"
 dnf5 rm -y "${removed_packages[@]}"
 
 # Docker setup take from ublue dx
-dnf5 config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+if ! test -e /etc/yum.repos.d/docker-ce.repo; then
+	dnf5 config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+fi
 sed -i "s/enabled=.*/enabled=0/g" /etc/yum.repos.d/docker-ce.repo
 dnf5 -y install --enablerepo=docker-ce-stable \
 	containerd.io \
