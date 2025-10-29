@@ -5,7 +5,8 @@ COPY /build_files /
 
 
 # Base Image
-FROM ghcr.io/ublue-os/silverblue-main:42
+#FROM ghcr.io/ublue-os/silverblue-main:42
+FROM ghcr.io/ublue-os/bluefin-dx:stable
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
