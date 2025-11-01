@@ -119,6 +119,14 @@ dnf5 -y copr enable ublue-os/packages
 dnf5 install -y ublue-brew
 dnf5 -y copr disable ublue-os/packages
 
+
+# Protonvpn
+wget "https://repo.protonvpn.com/fedora-$(cat /etc/fedora-release | cut -d' ' -f 3)-stable/protonvpn-stable-release/protonvpn-stable-release-1.0.3-1.noarch.rpm"
+dnf5 install -y ./protonvpn-stable-release-1.0.3-1.noarch.rpm
+rm ./protonvpn-stable-release-1.0.3-1.noarch.rpm
+dnf5 check-update --refresh
+dnf5 install -y proton-vpn-gnome-desktop
+
 just --justfile=/ctx/distro-utils/distrobox-auto/justfile install
 just --justfile=/ctx/distro-utils/flatpak-sync/justfile install
 cp /ctx/distro-utils/jetbrains-installer/jetbrains-ide-setup.sh /usr/bin/jetrbains-ide-setup
